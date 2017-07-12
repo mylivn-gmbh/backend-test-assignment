@@ -190,6 +190,7 @@ Your API should be REST compliant including proper HTTP methods, response codes 
 ### Language and framework
 
 We ask you to choose technology stack that you will use for this assignment:
+
 	- Scala + Play Framework
 	- Java 8 + Spring Boot
 
