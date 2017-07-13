@@ -203,4 +203,4 @@ You are applying for Scala developer position. So Scala is preferred. However if
 
 - Please include a brief explanation of your design and assumptions, along with your code, as well as detailed instructions to run your application.
 
-- We expect you to submit what you believe is production-quality code; code that you’d be able to run, maintain, and evolve; your code should follow best Java/Scala practices.
+- We expect you to submit what you believe is production-quality code; code that you’d be able to run, maintain, and evolve; your code should follow best Java/Scala practices. Consider writing unit tests as a bonus part of your assignment.
