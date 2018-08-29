@@ -1,206 +1,57 @@
-# Test assignment
+## Scala/Java developer test assignment
 
-### Summary
+### Description
+In this test assignment candidate should implement a simple message queue.
+Message broker and message interfaces are provided as a part of this test assignment.
 
-In this test assignment you need to develop a small API gateway.
-Our internal services are designed the way that they are responsible only for their own small scope and should not be accessed directly. The gateway you are going to implement provide REST API interface for external users and communicate with internal services also using REST API.
+Candidate should submit following implementations:
+* in-memory message queue 
+* local filesystem message queue
+* wrapper around Amazon SQS (_optional_)
 
-Three main responsibilities of API gateway:
-- Aggregate data from internal services
-- Validate requests from API users
-- Be resilient to failures in internal services
+First two implementations are mandatory. The last one is optional (if you have some time left)
 
+### Requirements
 
-### Internal services
+#### General
+* You can implement this test assignment in Java, Scala or Kotlin. 
+* Message broker should support multiple queues.
+* When producer tries to send a message to a queue that does not exist, it should be created automatically.
+* Writing/reading to/from one queue should not affect writing/reading to/from another queue.
+* Each queue should be able to serve multiple producers and consumers.
+* Queue should not contain messages that were successfully processed. Only new ones and those that are being processed.
 
-There is actually one service, but we assume that they are 3 of them for this assignment purposes.
+#### In-memory
+* Each queue should be thread safe.
 
-You can easily install and run test assignment services from hub.docker.com.
+#### Local filesystem
+* Each queue should be thread and inter-process safe. 
+* Performance can be a trade-off here. When one consumer or producer is using the queue, other consumers and producers can wait for this queue.
+* Choose simplicity over complexity. You should not spend more than 2 hours for this implementation.
 
-	docker pull mylivn/backend-test-asignment-services:latest
+#### Amazon SQS
+* Start this implementation only if you have everything else covered.
 
-	docker run --name mylivn-test-services \
-		-p 9999:9000 \
-		-d mylivn/backend-test-asignment-services:latest
+#### Tests
+* You should cover provided interfaces with tests.
+* You can use JUnit, TestNG, Scalatest, Specs, etc.
 
-#### Posts services
+#### Project
+* You project should use Maven, Gradle or SBT.
+* Do not use unnecessary libraries.
 
-- Create new post
+#### Quality
+This is a test assignment. However, it is used not only to determine your coding skills but also how you write your code.
+When we review applicant's solution, we expect to see production ready code, which does not break in any real-world scenario (handles all important corner cases). Ability to predict corner cases for the problem an applicant solves is one of the most important engineering skills that we check.
 
-	```
-	POST /api/v0/posts/
-	request:
-	{
-		"user_key": 123, //post author
-		"title": "tilte",
-		"description": "description"
-	}
-	response:
-	{
-		"post_key": 123
-	}
-	```
+### Bonus
+If you have completed whole test assignment, polished it and consider it ideal and want more challenge to show your skills you can do a bonus part.
 
-- Get post
+Design interfaces and implement a library that allows making RMI calls over MessageBroker. If you'll decide to do this part, please focus on interface design.   
 
-	```
-	GET /api/v0/posts/${id}
-	response:
-	{
-	    "post_key": 321,
-	    "user_key": 123,
-	    "title": "tilte",
-	    "description": "description"
-	}
-	```
-
-- Delete post
-
-	```
-	DELETE /api/v0/posts/${id}
-	```
-
-#### Users service
-
-- Create new user
-	```
-	POST /api/v0/users/
-	request:
-	{
-		"username": "Elton John"
-	}
-	response:
-	{
-		"user_key": 321
-	}
-	```
-
-- Get user
-
-	```
-	GET /api/v0/users/${id}
-	response:
-	{
-		"user_key": 321
-		"username": "Elton John"
-	}
-	```
-
-- Delete user
-
-	```
-	DELETE /api/v0/users/${id}
-	```
-
-#### Comments service
-
-- Create comment
-
-	```
-	POST /api/v0/comments/
-	request:
-	{
-		"user_key": 321,
-		"post_key": 1,
-		"text": "Sorry Seems To Be The Hardest Word"
-	}
-	response:
-	{
-		"comment_key": 123
-	}
-	```
-
-- Get post comments
-
-	```
-	GET /api/v0/comments/
-	response:
-	{
-		"comments":[
-			{
-				"comment_key": 123
-				"user_key": 321,
-				"post_key": 1,
-				"text": "Sorry Seems To Be The Hardest Word"
-			}
-		]
-	}
-	```
-
-- Delete comment
-
-	```
-	DELETE /api/v0/comments/${id}
-	```
-
-
-### API Gateway
-
-For simplicity we skip authentication process.
-Any request can or can not contain HTTP Header `x-auth-token`. This header contains user key. If this header is present and *user exists* then user is authorized.
-
-
-API gateway should provide following API:
-- **Register user**
-
-	Just create user in users service.
-	Only unauthorized user can create new user.
-
-- **Delete user**
-
-	Delete user from users service
-	Only authorized user can delete himself.
-
-- **Create post**
-
-	Create new post in posts service.
-	Only existing user can create posts.
-
-- **Delete post**
-
-	Delete post from posts service.
-	Only post owner can delete post.
-
-- **Create comment**
-
-	Create new comment in comments service.
-	Post should exist.
-	User should be authorized.
-
-
-- **Delete comment**
-
-	Delete comment from comments service.
-	Only post owner or comment owner can delete comment.
-
-- **Get post with comments**
-
-	Should return an aggregate that should contain:
-
-	- post key
-	- post title
-	- post description
-	- all comments sorted by comment key
-	- each comment should contain author name
-	- if comment owner does not exist anymore, author name should be `<deleted user>`
-
-
-Your API should be REST compliant including proper HTTP methods, response codes and headers.
-
-### Language and framework
-
-We ask you to choose technology stack that you will use for this assignment:
-
-	- Scala + Play Framework
-	- Java 8 + Spring Boot
-
-You are applying for Scala developer position. So Scala is preferred. However if you have not enough skills in Play Framework or even Scala, but you still want to present your skills and continue with interview you can use Java 8.
-
-
-### Implementation, solution and submission
-
-- We need to be able to run and build your code ourselves, so please submit your code as a zipped file of source code and supporting files, without any compiled code. Please do not put your solution in open GitHub repository.
-
-- Please include a brief explanation of your design and assumptions, along with your code, as well as detailed instructions to run your application.
-
-- We expect you to submit what you believe is production-quality code; code that you’d be able to run, maintain, and evolve; your code should follow best Java/Scala practices. Consider writing unit tests as a bonus part of your assignment.
+### Submission
+After you finished your test assignment, please send us a link to download it to hr@mylivn.com. Please do not put your solution to any publicly available place on the internet (like GitHub, BitBucket). Best way to share files with us is to put them to any private cloud storage and provide us a private link.
+Also, your project should contain a README.md file with following info:
+* How to build your code
+* Short description of your solution
+* Assumptions you made while planning and structuring your solution  
