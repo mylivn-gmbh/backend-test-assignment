@@ -29,7 +29,7 @@ public interface Message {
     void commit();
 
     /**
-     * Marks message as failed to be processed immediately.
+     * Mark message as failed to be processed immediately.
      */
     void fail();
 }
