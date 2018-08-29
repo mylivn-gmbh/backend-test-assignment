@@ -26,6 +26,7 @@ First two implementations are mandatory. The last one is optional (if you have s
 #### Local filesystem
 * Each queue should be thread and inter-process safe. 
 * Performance can be a trade-off here. When one consumer or producer is using the queue, other consumers and producers can wait for this queue.
+* Choose simplicity over complexity. You should not spend more than 2 hours for this implementation.
 
 #### Amazon SQS
 * Start this implementation only if you have everything else covered.
@@ -45,7 +46,7 @@ When we review applicant's solution, we expect to see production ready code, whi
 ### Bonus
 If you have completed whole test assignment, polished it and consider it ideal and want more challenge to show your skills you can do a bonus part.
 
-The design interface and implement a library that allows making RMI calls over MessageBroker. If you'll decide to do this part, please focus on interface design.   
+Design interfaces and implement a library that allows making RMI calls over MessageBroker. If you'll decide to do this part, please focus on interface design.   
 
 ### Submission
 After you finished your test assignment, please send us a link to download it to hr@mylivn.com. Please do not put your solution to any publicly available place on the internet (like GitHub, BitBucket). Best way to share files with us is to put them to any private cloud storage and provide us a private link.
