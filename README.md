@@ -19,6 +19,7 @@ First two implementations are mandatory. The last one is optional (if you have s
 * When producer tries to send a message to a queue that does not exist, it should be created automatically.
 * Writing/reading to/from one queue should not affect writing/reading to/from another queue.
 * Each queue should be able to serve multiple producers and consumers.
+* Queue should not contain messages that were successfully processed. Only new ones and those that are being processed.
 
 #### In-memory
 * Each queue should be thread safe.
