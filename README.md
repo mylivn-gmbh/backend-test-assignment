@@ -37,7 +37,7 @@ First two implementations are mandatory. The last one is optional (if you have s
 * You can use JUnit, TestNG, Scalatest, Specs, etc.
 
 #### Project
-* You project should use Maven, Gradle or SBT.
+* Your project should use Maven, Gradle or SBT.
 * Do not use unnecessary libraries.
 
 #### Quality
