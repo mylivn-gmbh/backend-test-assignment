@@ -35,6 +35,7 @@ First two implementations are mandatory. The last one is optional (if you have s
 #### Tests
 * You should cover provided interfaces with tests.
 * You can use JUnit, TestNG, Scalatest, Specs, etc.
+* Please focus on test coverage - it is an important part of this test assignment.
 
 #### Project
 * Your project should use Maven, Gradle or SBT.
