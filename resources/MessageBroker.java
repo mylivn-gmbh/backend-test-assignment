@@ -24,6 +24,9 @@ public interface MessageBroker {
      * Other messages can be requested with further calls of this method.
      * This method can block.
      *
+     * Caller of this method should call Message#commit or Message#fail for each message after its processing.
+     * Otherwise messages will be read again by this or by other MessageBroker after timeout.
+     *
      * @param queue queue name (id)
      * @return list of messages (ordered from earliest to the latest)
      */
